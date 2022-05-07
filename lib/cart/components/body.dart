@@ -10,15 +10,15 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  List<Products> cartdetails = Cart().getCart();
+  List<CartItem> cartdetails = Cart().getCart();
   double sum = 0.0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    cartdetails.forEach((product) {
-      sum = sum + product.price;
+    cartdetails.forEach((item) {
+      sum = sum + item.product.price * item.quantity;
     });
   }
 
@@ -38,14 +38,15 @@ class _BodyState extends State<Body> {
                     children: [
                       GestureDetector(
                         child: CartItem(
-                          product: cartdetails[index],
+                          product: cartdetails[index].product,
+                          quantity: cartdetails[index].quantity,
                         ),
                         onTap: () {
                           setState(() {
                             cartdetails.removeAt(index);
                             sum = 0.0;
-                            cartdetails.forEach((product) {
-                              sum = sum + product.price;
+                            cartdetails.forEach((item) {
+                              sum = sum + item.product.price * item.quantity;
                             });
                           });
                         },
@@ -57,6 +58,7 @@ class _BodyState extends State<Body> {
           ),
           CheckOutCart(
             sum: sum,
+            cartdetails: cartdetails,
           )
         ],
       ),
@@ -66,8 +68,9 @@ class _BodyState extends State<Body> {
 
 class CartItem extends StatelessWidget {
   Products product;
+  int quantity;
 
-  CartItem({required this.product});
+  CartItem({required this.product, required this.quantity});
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +80,7 @@ class CartItem extends StatelessWidget {
       child: Row(children: [
         SizedBox(width: 100, height: 100, child: Image.asset(product.image)),
         Expanded(child: Text(product.title)),
+        Expanded(child: Text("x" + quantity.toString())),
         Expanded(child: Text(product.price.toString())),
         Icon(Icons.delete_outlined)
       ]),

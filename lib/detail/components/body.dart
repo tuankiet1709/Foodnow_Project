@@ -88,7 +88,8 @@ class _BodyState extends State<Body> {
             height: 100,
           ),
           AddProductToCart(
-            product: widget.product,
+            products: widget.product,
+            quantity: widget._quantity,
           )
         ],
       ),

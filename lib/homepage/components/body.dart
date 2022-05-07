@@ -11,6 +11,8 @@ import 'package:tranhatuankiet_18dh110808/model/utilities.dart';
 import 'menuheader.dart';
 
 class Body extends StatefulWidget {
+  int? index;
+  Body(this.index);
   @override
   _BodyState createState() => _BodyState();
 }
@@ -24,7 +26,7 @@ class _BodyState extends State<Body> {
     List<Widget> screen = [
       HomeDetail(),
       FavoriteDetail(Utilities.data),
-      NotificationDetail(),
+      NotificationDetail(Utilities.carts),
       AccountDetail()
     ];
 
@@ -39,10 +41,11 @@ class _BodyState extends State<Body> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        currentIndex: selectIndex,
+        currentIndex: widget.index ?? selectIndex,
         onTap: (index) {
           setState(() {
             selectIndex = index;
+            widget.index = index;
             if (selectIndex != 3) {
               flag = true;
             } else {
@@ -75,7 +78,7 @@ class _BodyState extends State<Body> {
             SizedBox(
               height: 10,
             ),
-            screen[selectIndex]
+            screen[widget.index ?? selectIndex]
           ],
         ),
       ),

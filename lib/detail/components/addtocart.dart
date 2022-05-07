@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tranhatuankiet_18dh110808/cart/components/body.dart';
 import 'package:tranhatuankiet_18dh110808/model/products.dart';
 
 import '../../model/carts.dart';
 
 class AddProductToCart extends StatefulWidget {
-  Products product;
+  Products products;
+  int quantity;
 
-  AddProductToCart({required this.product});
+  AddProductToCart({required this.products, required this.quantity});
 
   @override
   _AddProductToCartState createState() => _AddProductToCartState();
@@ -28,7 +30,7 @@ class _AddProductToCartState extends State<AddProductToCart> {
       child: ElevatedButton(
         onPressed: () {
           Cart cart = Cart();
-          cart.addProductToCart(widget.product);
+          cart.addProductToCart(widget.products, widget.quantity);
           print(cart.getCart().length.toString());
           Fluttertoast.showToast(
               msg: "Add to cart",
@@ -40,10 +42,10 @@ class _AddProductToCartState extends State<AddProductToCart> {
               fontSize: 16.0);
         },
         style: ElevatedButton.styleFrom(
-                  primary: Colors.green,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                ),
+          primary: Colors.green,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
         child: Text(
           "Add to cart",
           style: TextStyle(

@@ -6,11 +6,14 @@ import 'package:http/http.dart' as http;
 import 'package:convert/convert.dart';
 import 'package:quiver/strings.dart';
 
+import 'carts.dart';
+
 class Utilities {
   static String host = 'https://172.16.33.213:3000/';
   Uri url = Uri.parse('http://192.168.0.100:3000/api/food');
 
   static List<Products> data = [];
+  static List<Cart> carts = [];
 
   Future<List<Products>> getProducts() async {
     var res = await http.get(url);
